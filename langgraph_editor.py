@@ -39,7 +39,7 @@ class SaveWorkflowHandler(tornado.web.RequestHandler):
 
         workflowName = data["workflowName"]
         workflow = data["workflow"]
-        with open(os.path.join("/content", f"{workflowName}.json"), "w") as f:
+        with open(os.path.join("content", f"{workflowName}.json"), "w") as f:
             f.write(json.dumps(workflow, indent=2, ensure_ascii=False))
 
         self.write({"message":"ok"})
@@ -67,7 +67,7 @@ class LoadWorkflowHandler(tornado.web.RequestHandler):
                 return self.finish(json.dumps({"error":"Missing data. Required JSON fields: %s" % ", ".join(requiredFields)}))
 
         workflowName = data["workflowName"]
-        with open(os.path.join("/content", f"{workflowName}.json"), "r") as f:
+        with open(os.path.join("content", f"{workflowName}.json"), "r") as f:
             workflow = json.loads(f.read())
 
         self.write({"message":"ok", "workflow": workflow})
@@ -98,7 +98,7 @@ class CodeHandler(tornado.web.RequestHandler):
                 return self.finish(json.dumps({"error":"Missing data. Required JSON fields: %s" % ", ".join(requiredFields)}))
 
         print(data["code"])
-        with open("/content/output.py", "w") as f:
+        with open("content/output.py", "w") as f:
             f.write(data["code"])
 
         self.write({"message":"ok"})
